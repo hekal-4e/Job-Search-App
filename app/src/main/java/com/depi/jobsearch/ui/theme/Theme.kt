@@ -9,28 +9,31 @@ import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 
 private val DarkColorScheme = darkColorScheme(
-    primary = Purple80,
-    secondary = PurpleGrey80,
-    tertiary = Pink80
+    primary = Purple40,
+    onPrimary = Color.White,
+    secondary = Purple80,
+    background = DarkBackground,
+    surface = SurfaceDark,
+    onSurface = OnSurfaceLight
 )
 
 private val LightColorScheme = lightColorScheme(
-    primary = Purple40,
-    secondary = PurpleGrey40,
-    tertiary = Pink40
+    primary = DarkPurple, // Primary color for sidebar and profile card background
+    secondary = Orange,   // Accent color for icons and buttons
+    tertiary = Blue,      // Action button color (dark blue/black)
 
-    /* Other default colors to override
-    background = Color(0xFFFFFBFE),
-    surface = Color(0xFFFFFBFE),
-    onPrimary = Color.White,
-    onSecondary = Color.White,
-    onTertiary = Color.White,
-    onBackground = Color(0xFF1C1B1F),
-    onSurface = Color(0xFF1C1B1F),
-    */
+    background = LightGray, // Background for main content area
+    surface = White,       // Content background
+    onPrimary = White,     // Text color on primary background
+    onSecondary = Black,   // Text color on secondary background
+    onTertiary = White,    // Text color on tertiary background
+    onBackground = Black,  // Text color on background
+    onSurface = Black,     // Text color on surface
+
 )
 
 @Composable
