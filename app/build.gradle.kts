@@ -68,5 +68,6 @@ dependencies {
     implementation("com.google.firebase:firebase-storage")
 
     implementation("androidx.compose.material3:material3:1.1.2")
+    implementation("androidx.compose.material:material-icons-extended:1.7.8")
 
 }

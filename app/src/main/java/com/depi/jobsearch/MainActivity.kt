@@ -11,6 +11,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.depi.jobsearch.ui.screens.ProfileScreen
+import com.depi.jobsearch.ui.screens.previewUser
 import com.depi.jobsearch.ui.theme.JobSearchTheme
 
 class MainActivity : ComponentActivity() {
@@ -20,9 +22,11 @@ class MainActivity : ComponentActivity() {
         setContent {
             JobSearchTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
+                    ProfileScreen(
+                        onEditClick = {  },
+                        onSettingsClick = {  },
+                        modifier = Modifier.padding(innerPadding),
+                        userProfile = previewUser()
                     )
                 }
             }
@@ -38,11 +42,15 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
     )
 }
 
-
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun GreetingPreview() {
     JobSearchTheme {
-        Greeting("Android")
+        ProfileScreen(
+            onEditClick = {},
+            onSettingsClick = {},
+            modifier = Modifier,
+            userProfile = previewUser()
+        )
     }
 }
