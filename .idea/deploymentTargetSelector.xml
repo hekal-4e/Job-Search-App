@@ -4,7 +4,7 @@
     <selectionStates>
       <SelectionState runConfigName="JobSearchApp.app">
         <option name="selectionMode" value="DROPDOWN" />
-        <DropdownSelection timestamp="2025-05-10T23:45:56.860366500Z">
+        <DropdownSelection timestamp="2025-05-12T09:29:52.561132500Z">
           <Target type="DEFAULT_BOOT">
             <handle>
               <DeviceId pluginId="LocalEmulator" identifier="path=C:\Users\dell\.android\avd\Pixel_7_API_34.avd" />

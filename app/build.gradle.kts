@@ -47,6 +47,7 @@ android {
         kotlinCompilerExtensionVersion = "1.5.1"
     }
 
+
     // Fix for the Bouncycastle conflict
     packaging {
         resources {
@@ -74,9 +75,9 @@ dependencies {
     implementation(libs.firebase.functions.ktx)
     implementation(libs.play.services.auth)
     implementation(libs.androidx.compose.material)
-    implementation(libs.ads.mobile.sdk)
     implementation(libs.androidx.room.common.jvm)
     coreLibraryDesugaring(libs.desugar.jdk.libs)
+
 
     // -- Compose BOM (manages all Compose UI versions) --
     implementation(platform("androidx.compose:compose-bom:2024.02.00"))
@@ -84,6 +85,7 @@ dependencies {
 
     // -- Firebase BOM and libs --
     implementation(platform(libs.firebase.bom))
+    implementation("com.google.firebase:firebase-storage-ktx:20.0.0")
     implementation(libs.firebase.auth)
     implementation(libs.firebase.core)
     implementation(libs.firebase.firestore)
