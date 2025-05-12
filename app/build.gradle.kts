@@ -1,75 +1,138 @@
 plugins {
-    alias(libs.plugins.android.application)
-    alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.kotlin.compose)
+    id("com.android.application")
+    id("org.jetbrains.kotlin.android")
+    id("org.jetbrains.kotlin.plugin.compose")
     id("com.google.devtools.ksp")
+    id("com.google.gms.google-services")
 }
 
 android {
-    namespace = "com.depi.jobsearch"
+    namespace = "com.example.jobsearchapp"
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.depi.jobsearch"
+        applicationId = "com.example.jobsearchapp"
         minSdk = 26
         targetSdk = 35
         versionCode = 1
         versionName = "1.0"
-
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        vectorDrawables {
+            useSupportLibrary = true
+        }
     }
 
     buildTypes {
         release {
             isMinifyEnabled = false
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
+            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
     }
+
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+        isCoreLibraryDesugaringEnabled = true
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
+
     kotlinOptions {
-        jvmTarget = "11"
+        jvmTarget = "17"
     }
 
     buildFeatures {
         compose = true
     }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.5.1"
+    }
+
+    // Fix for the Bouncycastle conflict
+    packaging {
+        resources {
+            excludes += listOf(
+                "/META-INF/{AL2.0,LGPL2.1}",
+                "META-INF/DEPENDENCIES",
+                "META-INF/LICENSE",
+                "META-INF/LICENSE.txt",
+                "META-INF/license.txt",
+                "META-INF/NOTICE",
+                "META-INF/NOTICE.txt",
+                "META-INF/notice.txt",
+                "META-INF/ASL2.0",
+                "META-INF/*.kotlin_module",
+                "META-INF/versions/9/OSGI-INF/MANIFEST.MF"
+            )
+        }
+    }
 }
 
 dependencies {
+    implementation(libs.cronet.embedded)
+    implementation(libs.androidx.runtime.livedata)
+    implementation(libs.identity.jvm)
+    implementation(libs.firebase.functions.ktx)
+    implementation(libs.play.services.auth)
+    implementation(libs.androidx.compose.material)
+    implementation(libs.ads.mobile.sdk)
+    implementation(libs.androidx.room.common.jvm)
+    coreLibraryDesugaring(libs.desugar.jdk.libs)
 
-    implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.lifecycle.runtime.ktx)
-    implementation(libs.androidx.activity.compose)
-    implementation(platform(libs.androidx.compose.bom))
-    implementation(libs.androidx.ui)
-    implementation(libs.androidx.ui.graphics)
-    implementation(libs.androidx.ui.tooling.preview)
-    implementation(libs.androidx.material3)
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
-    androidTestImplementation(platform(libs.androidx.compose.bom))
-    androidTestImplementation(libs.androidx.ui.test.junit4)
-    debugImplementation(libs.androidx.ui.tooling)
-    debugImplementation(libs.androidx.ui.test.manifest)
+    // -- Compose BOM (manages all Compose UI versions) --
+    implementation(platform("androidx.compose:compose-bom:2024.02.00"))
+    androidTestImplementation(platform("androidx.compose:compose-bom:2024.02.00"))
 
-    implementation("androidx.room:room-runtime:2.7.0")
-    ksp("androidx.room:room-compiler:2.7.0")
+    // -- Firebase BOM and libs --
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.auth)
+    implementation(libs.firebase.core)
+    implementation(libs.firebase.firestore)
+    implementation(libs.firebase.storage)
+    implementation(libs.firebase.messaging.ktx)
+    implementation(libs.firebase.ads)
+    implementation(libs.firebase.firestore.ktx)
+    implementation(libs.firebase.database)
 
-    implementation(platform("com.google.firebase:firebase-bom:32.7.2"))
-    implementation("com.google.firebase:firebase-auth")
-    implementation("com.google.firebase:firebase-firestore")
-    implementation("com.google.firebase:firebase-storage")
+    // -- Play Services --
+    implementation(libs.play.services.base)
+    implementation(libs.play.services.tasks)
+    implementation(libs.play.services.basement)
+    implementation(libs.play.services.ads)
 
-    implementation("androidx.compose.material3:material3:1.1.2")
-    implementation("androidx.compose.material:material-icons-extended:1.7.8")
+    // -- AndroidX Core & Lifecycle --
+    implementation(libs.androidx.core.ktx.v1120)
+    implementation(libs.androidx.lifecycle.runtime.ktx.v270)
+    implementation(libs.androidx.lifecycle.viewmodel.compose)
+
+    // -- Navigation --
+    implementation(libs.androidx.navigation.compose)
+
+    // -- Coil (image loading) --
+    implementation(libs.coil.compose)
+
+    // -- UI / Material3 --
+    implementation(libs.material3)
+    implementation(libs.androidx.compose.material3.material3)
+    implementation("androidx.compose.material:material-icons-extended:1.6.3")
     implementation("androidx.compose.material:material:1.8.0-rc03")
-    implementation ("androidx.navigation:navigation-compose:2.7.0")
 
+    // -- Compose UI & Tooling --
+    implementation("androidx.compose.ui:ui")
+    implementation("androidx.compose.ui:ui-graphics")
+    implementation("androidx.compose.ui:ui-tooling-preview")
+    debugImplementation("androidx.compose.ui:ui-tooling")
+    debugImplementation("androidx.compose.ui:ui-test-manifest")
+    androidTestImplementation("androidx.compose.ui:ui-test-junit4")
+
+    // -- Animation & Lottie --
+    implementation("androidx.compose.animation:animation")
+    implementation("com.airbnb.android:lottie-compose:6.6.6")
+
+    // -- Testing --
+    testImplementation("junit:junit:4.13.2")
+    androidTestImplementation("androidx.test.ext:junit:1.1.5")
+    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+
+    // -- Coroutines --
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.0")
 }
